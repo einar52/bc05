@@ -1,0 +1,119 @@
+----------------------
+List of projects
+----------------------
+bc
+bctools
+-------------------------------------------------------------------------------
+bc
+-------------------------------------------------------------------------------
+Version X.XXX
+Release date: YYYY-MM-DD
+-------------------------------------------------------------------------------
+Project state:
+production
+-------------------------------------------------------------------------------
+Credits
+	Einar Kjartansson
+-------------------------------------------------------------------------------
+Project description
+
+Library for bc files. BC format is a seismic censor data format.
+-------------------------------------------------------------------------------
+Dependencies:
+
+-------------------------------------------------------------------------------
+Documentation
+
+-------------------------------------------------------------------------------
+Installation instructions
+
+make libbc.a
+-------------------------------------------------------------------------------
+Manifest
+
+bitcomprl.h
+evlib.h
+getwdata.h
+silread.h
+util.h
+bitcomprl.c
+evlib.c
+getwdata.c
+isbcdata.c
+linux.c
+shift55_8.c
+silread.c
+time.c
+util.c
+-------------------------------------------------------------------------------
+Additional Notes
+
+2011-02-25 Ólafur St. Arnarsson
+The type time_t is twice as big on á 64-bit linux. When  SilChannel is assigned
+a value in line 287 in file silread.c it fails.
+
+When discoverd line 287 looked like this
+
+        j = fread(&tb,N_BCS_HEAD,1,inf);
+
+Some discussion can be found here http://www.gnu.org/software/year2000.html
+
+This is how it works and how it fails in GNU Debugger
+
+
+--OK--
+My old 32-bit machine
+uname -a
+Linux skjalfti 2.6.28-11-generic #42-Ubuntu SMP Fri Apr 17 01:57:59 UTC 2009 i686 GNU/Linux
+
+(gdb) p tb
+$2 = {data = 0x0, sTime = 1297139640, nData = 12000, cTime = 1297141955, station = "grf", component = "3", freq = 100, ascHeadSize = 56,
+  ascHeadN = 3, ascHead = 0x4 <Address 0x4 out of bounds>}
+(gdb) p tb.ascHeadSize
+$3 = 56
+--END--
+
+--NOT OK--
+My old 64-bit machine
+uname -a
+Linux olafur-desktop 2.6.35-23-generic #41-Ubuntu SMP Wed Nov 24 11:55:36 UTC 2010 x86_64 GNU/Linux
+
+(gdb) p tb
+$1 = {data = 0x0, sTime = -4336878149515071776, nData = 1735550464, cTime = 2320837375702859779, station = "G24e", component = "\000t",
+  freq = 28532, ascHeadSize = 111, ascHeadN = 12147, ascHead = 0x7fff30323220 <Address 0x7fff30323220 out of bounds>}
+(gdb) p tb.ascHeadSize
+$2 = 111
+--END--
+-------------------------------------------------------------------------------
+bctool
+-------------------------------------------------------------------------------
+Version X.XXX
+Release date: YYYY-MM-DD
+-------------------------------------------------------------------------------
+Project state:
+production
+-------------------------------------------------------------------------------
+Credits
+	Einar Kjartansson
+-------------------------------------------------------------------------------
+Project description
+
+Toolbox for bc files. BC format is a seismic censor data format.
+-------------------------------------------------------------------------------
+Dependencies:
+The bc library libbc.a
+-------------------------------------------------------------------------------
+Documentation
+
+-------------------------------------------------------------------------------
+Installation instructions
+
+make bctool
+-------------------------------------------------------------------------------
+Manifest
+
+silread.h
+bctool.c
+-------------------------------------------------------------------------------
+Additional Notes
+
